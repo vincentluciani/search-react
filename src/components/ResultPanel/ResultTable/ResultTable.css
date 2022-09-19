@@ -1,0 +1,31 @@
+.search-results{
+    font-size: 25px;
+}
+
+td:nth-child(2) {
+    background-color: #f7f7f7c7;
+}
+td:first-child{
+    width: 5px;
+    font-size:13px;
+    text-align: center;
+    writing-mode: vertical-lr;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+table, th, td {
+    border: 1px solid grey;
+}
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+}
+table {
+    background: white;
+}

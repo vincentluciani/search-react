@@ -1,0 +1,12 @@
+.filters {
+    padding-left: 27px;
+    display: block;
+    width: 220px;
+    float: left;
+    font-size: 13px;
+}
+
+.category-label {
+    font-weight: 900;
+    margin-bottom: 5px;
+}
