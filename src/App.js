@@ -38,7 +38,7 @@ function App(){
  
   const getMoreResults = () => {
     let newSearchResults = searchResults
-    newSearchResults.items = [...searchResults.items,...pageTwo.items]
+   /* newSearchResults.items = [...searchResults.items,...pageTwo.items]*/
     setSearchResults(newSearchResults)
   }
 
