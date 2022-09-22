@@ -8,6 +8,9 @@ const fetchResult = async (query) => {
 
     const jsonResults = await fetchResult.json();
 
+    jsonResults.start = 1 + (query.page -1) * pageSize
+    jsonResults.end = jsonResults.start + pageSize
+
     if (fetchResult.status == '200'){
         return {
                         isLoaded: true,
