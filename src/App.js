@@ -2,8 +2,9 @@ import './App.css';
 import ResultTable from './components/ResultPanel/ResultTable/ResultTable.js';
 import FacetSection from './components/LeftPanel/FacetSection/FacetSection.js';
 import React, { useState,useEffect } from 'react';   
-import {fetchResults} from './services/fetchResults.js'
+//import {fetchResults} from './services/fetchResults.js'
 import { useCallback } from 'react';
+import fetchResult from './services/fetchResult.js';
 
 var pageOne = { "items":[{"id":"https___www_vincent_luciani_com_sitemap_xml_6","category":"SQL","subCategory":"Select, Count, Order","question":"list of customers which name starts with “ra”.","answer":"where last_name like ‘ra%’"},{"id":"https___www_vincent_luciani_com_sitemap_xml_321","category":"JAVA","subCategory":"Dealing with Arrays","question":"Get the last key of a hash","answer":"myValue=myMap.lastKey();"},{"id":"https___www_vincent_luciani_com_sitemap_xml_261","category":"JAVA","subCategory":"Dealing with Strings","question":"Take characters from position i to j of a string and put in an array of character, putting the first character at position k in this array","answer":"myString.getChars(i,j,myArrayOfChars,k)"},{"id":"https___www_vincent_luciani_com_sitemap_xml_18","category":"SQL","subCategory":"group by","question":"not forget in grouping","answer":"when grouping by a column, must select this column + an agregator of any other column. Never select another column than the ones used in the grouping without any agregator"},{"id":"https___www_vincent_luciani_com_sitemap_xml_103","category":"PHP","subCategory":"Deal with files","question":"Unlock file","answer":"flock($filepointer,LOCK_UN);"},{"id":"https___www_vincent_luciani_com_sitemap_xml_83","category":"PHP","subCategory":"Logic","question":"check if a parameter is null","answer":"is_null($myparameter)"}],
                 "details":{"totalHits":324,"aggregations":{"category":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,
@@ -23,7 +24,7 @@ function App(){
   const params = new URLSearchParams(window.location.search);
   const term = params.get('term')
   /*const [term, setTerm] = useState(termFromURL);*/
-  /*const [searchResults, setSearchResults] = useState(pageOne.items);*/
+  //const [searchResults, setSearchResults] = useState(pageOne);
   const [searchResults, setSearchResults] = useState({});
   const totalHits= pageOne.details.totalHits;
   const facetData = pageOne.details.aggregations.category.buckets
@@ -59,15 +60,20 @@ function App(){
   }, [fetchResultsHandler]);*/
 
   useEffect(() => {
+    console.log("calling api")
     let mounted = true;
-    fetchResult()
+    fetchResult(term)
     .then(result => {
+      console.log("mounted:")
+      console.log(mounted)
       if(mounted){
-        setSearchResults(result)
+        setSearchResults(result.items)
+        console.log(result.items)
       }
     })
+    //console.log(searchResults)
     return ()=> mounted = false
-  }, []);
+  }, [term]);
 
   const getMoreResults = () => {
     let newSearchResults = searchResults
@@ -76,14 +82,14 @@ function App(){
   }
 
   return (
-    <div className="App">
+    <div className="App"> 
       <div className="result-header-wrapper">
-        <div class="result-header">Showing results x-y from {searchResults.details.totalHits} results for {term}</div>
+        <div class="result-header">Showing results x-y from {searchResults && searchResults.details && searchResults.details.totalHits} results for {term}</div>
       </div>
       <div class="search-wrapper">
-        <FacetSection facetData={searchResults.details.aggregations.category.buckets} term={params.get('term')}></FacetSection>
+        <FacetSection facetData={searchResults && searchResults.details && searchResults.details.aggregations.category.buckets} term={params.get('term')}></FacetSection>
         <div class="result-content"> 
-            <ResultTable tableData={searchResults}/>
+            <ResultTable tableData={searchResults && searchResults.items}/>
             <div class="action-container"><div class="action-button" onClick={getMoreResults}>More Results</div></div>
             
         </div>
@@ -92,5 +98,21 @@ function App(){
     </div>
   );
 }
+
+/*  
+ <div className="result-header-wrapper">
+        <div class="result-header">Showing results x-y from {searchResults && searchResults.details && searchResults.details.totalHits} results for {term}</div>
+      </div>
+      <div class="search-wrapper">
+        <FacetSection facetData={searchResults && searchResults.details && searchResults.details.aggregations.category.buckets} term={params.get('term')}></FacetSection>
+        <div class="result-content"> 
+            <ResultTable tableData={searchResults && searchResults.items}/>
+            <div class="action-container"><div class="action-button" onClick={getMoreResults}>More Results</div></div>
+            
+        </div>
+
+      </div>
+
+*/
 
 export default App;
