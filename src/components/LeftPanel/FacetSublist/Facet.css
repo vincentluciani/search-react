@@ -1,0 +1,12 @@
+.subcategory {
+    color: black;
+    text-decoration: none;
+    padding-left:10px;
+    cursor: pointer;
+}
+
+
+
+.subcategory:hover {
+    text-decoration: underline;
+}

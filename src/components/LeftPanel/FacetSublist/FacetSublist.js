@@ -1,10 +1,12 @@
 import './FacetSublist.css';
+import Facet from './Facet.js'
 
 const FacetSublist= props =>{
+
   return(
   <div>
     
-     {props.facetList && props.facetList.map(item=><a href={"?term="+props.term+"&category="+props.category+"&subCategory="+item.key}><div class="subcategory">{item.key} ({item.doc_count})</div></a>)}
+     {props.facetList && props.facetList.map(item=><Facet category={props.category} term={props.term} runNewQuery={props.runNewQuery} subCategory={item.key} doc_count={item.doc_count} />)}
 
   </div>
 );

@@ -1,6 +1,10 @@
 
-const fetchResult = async (term) => {
-    const fetchResult = await fetch("https://www.vincent-luciani.com/api/vince/knowledge/search/?term="+term+"&pageSize=20")
+const pageSize = 20
+
+const fetchResult = async (query) => {
+
+    const url = await buildURL(query)
+    const fetchResult = await fetch(url)
 
     const jsonResults = await fetchResult.json();
 
@@ -21,3 +25,22 @@ const fetchResult = async (term) => {
   }
 
   export default fetchResult
+
+  const buildURL = async(query) => {
+    let url = "https://www.vincent-luciani.com/api/vince/knowledge/search/?term="+query.term+"&pageSize="+pageSize
+
+    if (query.page && query.page > 1){
+      const newOfset = query.page * pageSize
+      url += "&offset=" + newOfset
+    }
+
+    if (query.category){
+      url += "&category=" + query.category
+    }
+
+    if (query.subCategory){
+      url += "&subCategory=" + query.subCategory
+    }
+
+    return url
+  }

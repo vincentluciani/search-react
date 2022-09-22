@@ -10,3 +10,7 @@
     font-weight: 900;
     margin-bottom: 5px;
 }
+
+.all-categories-link{
+    cursor: pointer;
+}
