@@ -45,7 +45,9 @@ function App(){
   useEffect(() => {
     const query = {
       page: 1,
-      term: params.get('term')
+      term: params.get('term'),
+      category: params.get('category'),
+      subCategory: params.get('subCategory')
     }
     setQuery(query)
     fetchResultsHandler(query)
