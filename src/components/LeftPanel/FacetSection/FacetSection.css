@@ -14,3 +14,22 @@
 .all-categories-link{
     cursor: pointer;
 }
+@media screen and (max-width: 999px){
+    .filters {
+        padding-left: 20px;
+        display: block;
+        margin-bottom: 10px;
+        overflow: auto;
+    }
+    .category,.all-categories-link {
+        display: block;
+        clear: both;
+    }
+    .category-label, .caret.down {
+        cursor: pointer;
+        color: #1803b1;
+        border-top-color: #1803b1;
+    }
+}
+
+

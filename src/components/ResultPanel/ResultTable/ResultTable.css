@@ -18,14 +18,15 @@ th, td {
     overflow-wrap: break-word;
     word-wrap: break-word;
 }
-table, th, td {
+table,th, td {
     border: 1px solid grey;
+    border-collapse:collapse;
 }
 table {
-    border-collapse: collapse;
     table-layout: fixed;
     width: 100%;
 }
+
 table {
     background: white;
 }

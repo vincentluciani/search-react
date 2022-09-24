@@ -49,3 +49,29 @@
   border-radius: 10px;
   cursor: pointer;
 }
+
+@media screen and (max-width: 999px){
+  .result-header {
+      margin: 0px 0px 10px 0px;
+      padding-left: 20px;
+  }
+  .filters {
+    padding-left: 20px;
+    display: block;
+    margin-bottom: 10px;
+    overflow: auto;
+  }
+  .subcategory {
+    padding: 5px;
+    display: block;
+    float: left;
+    margin: 5px;
+    border: 1px solid lightgray;
+    border-radius: 20px;
+  }
+  .result-content {
+    float: left;
+    max-width: 100%;
+    margin-left: 0px;
+}
+}

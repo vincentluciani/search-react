@@ -8,7 +8,7 @@ const ResultTable= props =>{
 
   return(
   <div class="search-results">
-    <table> 
+    <table  border="1" cellpadding="0" cellspacing="0"> 
     <tbody>
       {props.tableData && props.tableData.items && props.tableData.items.map(item=><tr><td>{item.category}</td><td><Question item={item} /></td><td><Answer item={item} /></td></tr>)}
     </tbody>

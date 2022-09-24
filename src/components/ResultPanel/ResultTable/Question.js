@@ -13,7 +13,7 @@ const Question= item =>{
         return item.question
     }
   }
- /*<div dangerouslySetInnerHTML={__html: purifyText(item.highlight.question[0])} /> */
+
   return(
       <div dangerouslySetInnerHTML={{__html: getQuestion(item.item)}} />
 );

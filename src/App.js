@@ -66,14 +66,14 @@ function App(){
 
   return (
     <div className="App"> 
-      <div className="result-header-wrapper">
+      <div className="result-header-wrapper" role="header">
         <div class="result-header">Showing results {searchResults.start}-{searchResults.end} from {searchResults && searchResults.details && searchResults.details.totalHits} results for {query.term}</div>
       </div>
       <div class="search-wrapper">
         <FacetSection facetData={searchResults && searchResults.details && searchResults.details.aggregations.category.buckets} term={query.term} runNewQuery={runNewQuery}></FacetSection>
         <div class="result-content"> 
             <ResultTable tableData={searchResults}/>
-            <div class="action-container"><div class="action-button" onClick={getMoreResults}>More Results</div></div>
+            <div class="action-container"><div role="action-button" class="action-button" onClick={getMoreResults}>More Results</div></div>
             
         </div>
 

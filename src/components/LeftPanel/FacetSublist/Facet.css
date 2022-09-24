@@ -10,3 +10,14 @@
 .subcategory:hover {
     text-decoration: underline;
 }
+
+@media screen and (max-width: 999px) {
+    .subcategory {
+        padding: 5px;
+        display: block;
+        float: left;
+        margin: 5px;
+        border: 1px solid lightgray;
+        border-radius: 20px;
+    }
+}
