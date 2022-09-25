@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor  } from '@testing-library/react';
 
 import fetchResult from "./services/fetchResult.js";
 import mockFetch   from './mocks/mockFetch.js';
@@ -111,13 +111,14 @@ afterEach(() => {
 //   expect(headerText).toBeInTheDocument();
 //   expect(counter).toHaveTextContent('1')
 // });
-it('sample test case', async () => {
+test('sample test case', async () => {
   render(<App />);
 
-  setTimeout(function () {
-    const headerText = screen.getByText(/Showing results 1-21 from 324 results for/i);
-    expect(headerText).toBeInTheDocument();
-  }, 2000);
+  await waitFor(() => expect(screen.getByText(/Showing results 1-21 from 324 results for/i)).toBeInTheDocument());
+  // setTimeout(function () {
+  //   const headerText = screen.getByText(/Showing results 1-21 from 324 results for/i);
+  //   expect(headerText).toBeInTheDocument();
+  // }, 1500);
 });
 
 // test('show more button', () => {
