@@ -111,13 +111,12 @@ afterEach(() => {
 //   expect(headerText).toBeInTheDocument();
 //   expect(counter).toHaveTextContent('1')
 // });
-it('sample test case', async (done) => {
+it('sample test case', async () => {
   render(<App />);
 
   setTimeout(function () {
-    const headerText = screen.getByText(/Showing results 1-41 from 47 results for array/i);
+    const headerText = screen.getByText(/Showing results 1-21 from 324 results for/i);
     expect(headerText).toBeInTheDocument();
-    done();
   }, 2000);
 });
 
