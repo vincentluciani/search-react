@@ -22,9 +22,7 @@ import { act } from "react-dom/test-utils";
 
 // WORKING
 beforeEach(() => {
-  jest.spyOn(window, 'fetch').mockResolvedValue({
-    json: jest.fn().mockResolvedValue(mockFetch())
-  })
+
 });
 
 // beforeEach(() => {
@@ -111,7 +109,10 @@ afterEach(() => {
 //   expect(headerText).toBeInTheDocument();
 //   expect(counter).toHaveTextContent('1')
 // });
-test('sample test case', async () => {
+test('first page', async () => {
+  jest.spyOn(window, 'fetch').mockResolvedValue({
+    json: jest.fn().mockResolvedValue(mockFetch("firstPage"))
+  })
   render(<App />);
 
   await waitFor(() => expect(screen.getByText(/Showing results 1-21 from 324 results for/i)).toBeInTheDocument());
@@ -119,7 +120,15 @@ test('sample test case', async () => {
   //   const headerText = screen.getByText(/Showing results 1-21 from 324 results for/i);
   //   expect(headerText).toBeInTheDocument();
   // }, 1500);
+
+  jest.spyOn(window, 'fetch').mockResolvedValue({
+    json: jest.fn().mockResolvedValue(mockFetch("secondPage"))
+  })
+
+  /* todo click on more button */
 });
+
+
 
 // test('show more button', () => {
 //   render(<App />);

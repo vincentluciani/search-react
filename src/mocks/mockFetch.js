@@ -13,19 +13,11 @@ var pageTwo = {"items":[{"id":"https___www_vincent_luciani_com_sitemap_xml_296",
 const  mockFetch = url => {
     console.log("using mockFetch")
     switch (url) {
-        case "https://": {
-            return {
-                ok: true,
-                status: 200,
-                json: async () => pageOne,
-            };
+        case "firstPage": {
+            return pageOne
         }
-        case "https://dog.ceo/api/breed/cattledog/images": {
-            return {
-                ok: true,
-                status: 200,
-                json: async () => pageTwo,
-            };
+        case "secondPage": {
+            return pageTwo;
         }
         default:
         return pageOne;
