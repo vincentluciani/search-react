@@ -3,7 +3,7 @@ import ResultTable from './components/ResultPanel/ResultTable/ResultTable.js';
 import FacetSection from './components/LeftPanel/FacetSection/FacetSection.js';
 import React, { useState,useEffect } from 'react';   
 import { useCallback } from 'react';
-import fetchResult from './services/fetchResult.js';
+import fetchResult from './services/fetchResult';
 
 function App(){
   const params = new URLSearchParams(window.location.search);
