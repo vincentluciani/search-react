@@ -4,6 +4,7 @@ import fetchResult from "./services/fetchResult.js";
 import mockFetch   from './mocks/mockFetch.js';
 import App from './App';
 import { act } from "react-dom/test-utils";
+import ReactDOM from 'react-dom/client';
 // beforeEach(() => {
 //   jest.spyOn(window, "fetch").mockImplementation(mockFetch);
 //   // jest.spyOn(mockObject, 'fetchResult').mockReturnValue(mockFetchResult);
@@ -18,11 +19,12 @@ import { act } from "react-dom/test-utils";
 // beforeEach(() => {
 //   fetch.mockClear();
 // });
-
+let container;
 
 // WORKING
 beforeEach(() => {
-
+  container = document.createElement('div');
+  document.body.appendChild(container);
 });
 
 // beforeEach(() => {
@@ -34,6 +36,8 @@ beforeEach(() => {
 
 afterEach(() => {
   jest.restoreAllMocks();
+  document.body.removeChild(container);
+  container = null;
 });
 
 
@@ -110,10 +114,20 @@ afterEach(() => {
 //   expect(counter).toHaveTextContent('1')
 // });
 test('first page', async () => {
+
+  // act(() => {
+  //   ReactDOM.createRoot(container).render(<Counter />);
+  // });
+  
   jest.spyOn(window, 'fetch').mockResolvedValue({
     json: jest.fn().mockResolvedValue(mockFetch("firstPage"))
   })
-  render(<App />);
+
+  act(() => {
+    ReactDOM.createRoot(container).render(<App />);
+  });
+
+  // render(<App />);
 
   await waitFor(() => expect(screen.getByText(/Showing results 1-21 from 324 results for/i)).toBeInTheDocument());
   // setTimeout(function () {
@@ -125,6 +139,17 @@ test('first page', async () => {
     json: jest.fn().mockResolvedValue(mockFetch("secondPage"))
   })
 
+  const moreButton = screen.getByRole("action-button");
+  expect(moreButton).toBeInTheDocument();
+  expect(moreButton).toBeEnabled();
+  expect(moreButton).toHaveClass("action-button")
+
+  act(() => {
+    moreButton.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  });
+
+  await waitFor(() => expect(screen.getByText(/Showing results 1-41 from 324 results for/i)).toBeInTheDocument());
+  
   /* todo click on more button */
 });
 
