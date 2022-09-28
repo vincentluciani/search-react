@@ -1,4 +1,4 @@
-import './ResultTable.css';
+
 import DOMPurify from "dompurify";
 
 const Answer= item =>{
@@ -13,9 +13,9 @@ const Answer= item =>{
         return item.question
     }
   }
- /*<div dangerouslySetInnerHTML={__html: purifyText(item.highlight.question[0])} /> */
+
   return(
-      <div dangerouslySetInnerHTML={{__html: getAnswer(item.item)}} />
+      <div role="answer" dangerouslySetInnerHTML={{__html: getAnswer(item.item)}} />
 );
 }
 export default Answer;

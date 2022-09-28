@@ -6,6 +6,7 @@
     font-size: 13px;
 }
 
+
 .category-label {
     font-weight: 900;
     margin-bottom: 5px;
@@ -25,10 +26,16 @@
         display: block;
         clear: both;
     }
-    .category-label, .caret.down {
+    .category-label {
         cursor: pointer;
         color: #1803b1;
         border-top-color: #1803b1;
+        display: flex;
+        align-items: center;
+        height: 18px;
+    }
+    .hidden{
+        display: none;
     }
 }
 

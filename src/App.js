@@ -2,8 +2,8 @@ import './App.css';
 import ResultTable from './components/ResultPanel/ResultTable/ResultTable.js';
 import FacetSection from './components/LeftPanel/FacetSection/FacetSection.js';
 import React, { useState,useEffect } from 'react';   
-import { useCallback } from 'react';
 import fetchResult from './services/fetchResult';
+import Header from './components/Header/Header.js'
 
 function App(){
   const params = new URLSearchParams(window.location.search);
@@ -13,7 +13,6 @@ function App(){
 
   const [loadingStatus, setLoadingStatus] = useState('INIT');
   const [fetchingError, setFetchingError] = useState(null);
-
 
   const fetchResultsHandler= (query) => {
     console.log("calling api")
@@ -66,14 +65,12 @@ function App(){
 
   return (
     <div className="App"> 
-      <div className="result-header-wrapper" role="header">
-        <div class="result-header">Showing results {searchResults.start}-{searchResults.end} from {searchResults && searchResults.details && searchResults.details.totalHits} results for {query.term}</div>
-      </div>
-      <div class="search-wrapper">
+      <Header start={searchResults.start} end={searchResults.end} totalHits={searchResults && searchResults.details && searchResults.details.totalHits} term={query.term}/>
+      <div className="search-wrapper">
         <FacetSection facetData={searchResults && searchResults.details && searchResults.details.aggregations.category.buckets} term={query.term} runNewQuery={runNewQuery}></FacetSection>
-        <div class="result-content"> 
+        <div className="result-content"> 
             <ResultTable tableData={searchResults}/>
-            <div class="action-container"><div role="action-button" class="action-button" onClick={getMoreResults}>More Results</div></div>
+            <div className="action-container"><div role="action-button" className="action-button" onClick={getMoreResults}>More Results</div></div>
             
         </div>
 

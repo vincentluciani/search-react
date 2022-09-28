@@ -1,16 +1,29 @@
 import './FacetSection.css';
-import FacetSublist from '../FacetSublist/FacetSublist.js'
+import FacetGroup from '../FacetGroup/FacetGroup.js'
+import Chevron from '../../Common/Chevron.js'
+import { useState } from 'react';
 
 const FacetSection= props =>{
 
+  const [hidden,setHidden] = useState(false)
+
+  const toggleHiddenNotHidden = () =>{
+    if (hidden){
+      setHidden(false)
+    } else {
+      setHidden(true)
+    }
+  }
   const clickHandler = () => {
     props.runNewQuery({term:props.term,page:1});
   }
   return(
-  <div class="filters">
-      <div class="category-label">Category</div>
-     {props.facetData && props.facetData.map(item => <div class="category">{item.key}<FacetSublist facetList={item.subCategory.buckets} category={item.key} term={props.term} runNewQuery={props.runNewQuery}/></div>)}
-     <br /><div onClick={clickHandler} class="all-categories-link">&lt; All Categories</div>
+  <div className="filters">
+      <div className="category-label" onClick={toggleHiddenNotHidden}><div>Category</div><Chevron orientation={hidden ? 'down' : 'up'} /></div>
+     <div className={'facet-section' + (hidden ? ' hidden' : '')}>
+        {props.facetData && props.facetData.map(item => <div className="category">{item.key}<FacetGroup facetList={item.subCategory.buckets} category={item.key} term={props.term} runNewQuery={props.runNewQuery}/></div>)}
+      </div>
+     <br /><div onClick={clickHandler} className="all-categories-link">&lt; All Categories</div>
   </div>
 );
 }

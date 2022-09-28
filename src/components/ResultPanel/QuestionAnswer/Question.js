@@ -1,4 +1,4 @@
-import './ResultTable.css';
+
 import DOMPurify from "dompurify";
 
 const Question= item =>{
@@ -15,7 +15,7 @@ const Question= item =>{
   }
 
   return(
-      <div dangerouslySetInnerHTML={{__html: getQuestion(item.item)}} />
+      <div role="question" dangerouslySetInnerHTML={{__html: getQuestion(item.item)}} />
 );
 }
 export default Question;

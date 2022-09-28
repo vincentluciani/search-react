@@ -7,27 +7,18 @@
     overflow: auto;
     margin-bottom: 17px
 }
-.result-header-wrapper {
-  margin-bottom: 20px;
-}
+
 .result-content {
   float: left;
   max-width: 70%;
   margin-left: 20px;
 }
-.result-header {
-    padding-left: 27px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-right: 0px;
-}
-.filters, .result-header {
+
+.filters {
     font-size: 13px;
 }
-.result-header {
-    height: 20px;
-}
-.result-header,.search-wrapper {
+
+.search-wrapper {
     max-width: 1620px;
     margin-left: auto;
     margin-right: auto;
@@ -51,10 +42,6 @@
 }
 
 @media screen and (max-width: 999px){
-  .result-header {
-      margin: 0px 0px 10px 0px;
-      padding-left: 20px;
-  }
   .filters {
     padding-left: 20px;
     display: block;
