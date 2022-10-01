@@ -10,7 +10,6 @@
 
 .result-content {
   float: left;
-  max-width: 70%;
   margin-left: 20px;
 }
 
@@ -69,6 +68,9 @@
 @media screen and (min-width: 1000px){
   .no-result{
     margin-top: 10px;
+  }
+  .result-content{
+    width: calc(100% - 300px); 
   }
 
 }

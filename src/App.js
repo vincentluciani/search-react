@@ -1,5 +1,6 @@
 import './App.css';
 import ResultTable from './components/ResultPanel/ResultTable/ResultTable.js';
+import ResultBoxes from './components/ResultPanel/ResultBoxes/ResultBoxes.js';
 import FacetSection from './components/LeftPanel/FacetSection/FacetSection.js';
 import React, { useState,useEffect } from 'react';   
 import fetchResult from './services/fetchResult';
@@ -12,9 +13,7 @@ function App(){
 
   const [searchResults, setSearchResults] = useState({});
   const [query, setQuery] = useState({});
-
-  const [loadingStatus, setLoadingStatus] = useState('INIT');
-  const [fetchingError, setFetchingError] = useState(null);
+  const [displayType, setDisplayType] = useState('table');
 
   const fetchResultsHandler= (query) => {
     console.log("calling api")
@@ -65,6 +64,14 @@ function App(){
     fetchResultsHandler(newQuery)
   }
 
+  const chooseDisplayTable = () => {
+    setDisplayType('table')
+  }
+
+  const chooseDisplayBoxes = () => {
+    setDisplayType('boxes')
+  }
+
   return (
     <div className="App"> 
       <Header start={searchResults.start} 
@@ -80,7 +87,8 @@ function App(){
                       runNewQuery={runNewQuery}/>
        
         <div className="result-content"> 
-          <ResultTable tableData={searchResults}/>
+          {(displayType == 'table') && <ResultTable tableData={searchResults}/>}
+          {(displayType == 'boxes') && <ResultBoxes tableData={searchResults}/>}
           {(searchResults.details.totalHits > searchResults.end) && 
           <div className="action-container">
             <div role="action-button" className="action-button" onClick={getMoreResults}>More Results</div>

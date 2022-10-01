@@ -1,0 +1,22 @@
+
+.category-label-box{
+    font-weight: normal;
+}
+
+.box{
+    border: 1px solid lightgrey;
+    width: 250px;
+    font-size: 15px;
+    margin:5px;
+    border-radius:10px;
+    padding: 7px;
+    margin-bottom: 20px;
+    word-wrap: break-word;
+}
+
+.span-toggle{
+    color: rgb(30, 30, 219);
+    text-decoration: underline;
+    margin-top:5px;
+    cursor: pointer;
+}
