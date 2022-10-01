@@ -11,15 +11,22 @@ const fetchResult = async (query) => {
     
     jsonResults.start = 1 + (query.page -1) * pageSize
     jsonResults.end = jsonResults.start + pageSize
+
+    if (jsonResults.end > jsonResults.details.totalHits ){
+      jsonResults.end = jsonResults.details.totalHits
+    }
+
     return {
       isLoaded: true,
       items: jsonResults
     }
   } else {
-    console.log("http response not ok");
+    console.log("no result");
     return {
       isLoaded: true,
-      error: "response status is not 200"
+      items: {details:{
+        totalHits: 0
+      }}
     }
   }
 
@@ -30,7 +37,7 @@ const buildURL = async(query) => {
   let url = "https://www.vincent-luciani.com/api/vince/knowledge/search/?term="+query.term+"&pageSize="+pageSize
 
   if (query.page && query.page > 1){
-    const newOfset = query.page * pageSize
+    const newOfset =  1 + (query.page -1) * pageSize
     url += "&offset=" + newOfset
   }
 

@@ -13,7 +13,14 @@
 
 @media screen and (max-width: 999px){
     .result-header {
-        margin: 0px 0px 10px 0px;
+        margin: 10px 0px 10px 0px;
         padding-left: 20px;
+    }
+}
+
+@media screen and (min-width: 1000px){
+    .result-header {
+        margin: 10px 0px 10px 0px;
+        padding-left: 30px;
     }
 }

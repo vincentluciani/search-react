@@ -28,7 +28,7 @@ function App(){
           newSearchResults.start = 1
           newSearchResults.end = result.items.end
           setSearchResults(newSearchResults)
-        } else if (query.page == 1){
+        } else if (query.page === 1){
           result.items.start = 1
           result.items.end = result.items.end
           setSearchResults(result.items)
@@ -65,16 +65,34 @@ function App(){
 
   return (
     <div className="App"> 
-      <Header start={searchResults.start} end={searchResults.end} totalHits={searchResults && searchResults.details && searchResults.details.totalHits} term={query.term}/>
+      <Header start={searchResults.start} 
+              end={searchResults.end} 
+              totalHits={searchResults && searchResults.details && searchResults.details.totalHits} 
+              term={query.term}/>
+      { searchResults && searchResults.details && (searchResults.details.totalHits > 0) &&   
       <div className="search-wrapper">
-        <FacetSection facetData={searchResults && searchResults.details && searchResults.details.aggregations.category.buckets} term={query.term} runNewQuery={runNewQuery}></FacetSection>
+        <FacetSection facetData={searchResults && searchResults.details && searchResults.details.aggregations.category.buckets} 
+                      term={query.term} 
+                      category={query.category} 
+                      subCategory={query.subCategory}
+                      runNewQuery={runNewQuery}/>
+       
+  
         <div className="result-content"> 
-            <ResultTable tableData={searchResults}/>
-            <div className="action-container"><div role="action-button" className="action-button" onClick={getMoreResults}>More Results</div></div>
-            
-        </div>
+          <ResultTable tableData={searchResults}/>
+          <div className="action-container">
+            <div role="action-button" className="action-button" onClick={getMoreResults}>More Results</div>
+          </div>
+        </div>       
+         
 
       </div>
+      }
+      { searchResults && searchResults.details && (searchResults.details.totalHits == 0) &&
+          <div className="no-result"> 
+          It is not you, it is me : I was seeking, I was striving, I was in it with all my heart, but I failed to find what you were looking for.
+          </div>
+      } 
     </div>
   );
 }
