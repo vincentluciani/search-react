@@ -1,0 +1,9 @@
+.big-icon svg, .big-icon{
+    height: 150px;
+    width: 150px;
+}
+.big-icon{
+    margin-left:auto;
+    margin-right: auto;
+    margin-top: 10px;
+}

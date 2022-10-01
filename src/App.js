@@ -4,6 +4,8 @@ import FacetSection from './components/LeftPanel/FacetSection/FacetSection.js';
 import React, { useState,useEffect } from 'react';   
 import fetchResult from './services/fetchResult';
 import Header from './components/Header/Header.js'
+import JumpingDog from './components/Common/JumpingDog';
+
 
 function App(){
   const params = new URLSearchParams(window.location.search);
@@ -91,6 +93,7 @@ function App(){
       { searchResults && searchResults.details && (searchResults.details.totalHits == 0) &&
           <div className="no-result"> 
           It is not you, it is me : I was seeking, I was striving, I was in it with all my heart, but I failed to find what you were looking for.
+          <JumpingDog />
           </div>
       } 
     </div>
