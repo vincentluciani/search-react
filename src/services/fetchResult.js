@@ -10,7 +10,7 @@ const fetchResult = async (query) => {
   if (jsonResults && jsonResults.details) { 
     
     jsonResults.start = 1 + (query.page -1) * pageSize
-    jsonResults.end = jsonResults.start + pageSize
+    jsonResults.end = jsonResults.start + pageSize - 1
 
     if (jsonResults.end > jsonResults.details.totalHits ){
       jsonResults.end = jsonResults.details.totalHits
