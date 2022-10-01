@@ -30,7 +30,10 @@ const  mockFetch = url => {
             return pageOne
         }
         case "secondPage": {
-            return pageTwo;
+            return pageTwo
+        }
+        case "nothing":{
+            return {}
         }
         default:
         return pageOne;

@@ -20,7 +20,7 @@ afterEach(() => {
   container = null;
 });
 
-
+/* TODO: search with array, first, second and third page */
 test('first page', async () => {
  
   jest.spyOn(window, 'fetch').mockResolvedValue({
@@ -31,7 +31,7 @@ test('first page', async () => {
     ReactDOM.createRoot(container).render(<App />);
   });
 
-  await waitFor(() => expect(screen.getByText(/Showing results 1-21 from 324 results for/i)).toBeInTheDocument());
+  await waitFor(() => expect(screen.getByText(/Showing results 1-20 from 324 results for/i)).toBeInTheDocument());
 
   jest.spyOn(window, 'fetch').mockResolvedValue({
     json: jest.fn().mockResolvedValue(mockFetch("secondPage"))
@@ -48,9 +48,23 @@ test('first page', async () => {
     moreButton.dispatchEvent(new MouseEvent('click', {bubbles: true}));
   });
 
-  await waitFor(() => expect(screen.getByText(/Showing results 1-41 from 324 results for/i)).toBeInTheDocument());
+  await waitFor(() => expect(screen.getByText(/Showing results 1-40 from 324 results for/i)).toBeInTheDocument());
   expect(screen.getAllByRole("question")).toHaveLength(13);
   expect(screen.getAllByRole("answer")).toHaveLength(13);
 });
 
 
+test('zero result', async () => {
+ 
+  jest.spyOn(window, 'fetch').mockResolvedValue({
+    json: jest.fn().mockResolvedValue(mockFetch("nothing"))
+  })
+
+  act(() => {
+    ReactDOM.createRoot(container).render(<App />);
+  });
+  
+  await waitFor(() => expect(screen.getByText(/It is not you, it is me/i)).toBeInTheDocument());
+  
+
+})
