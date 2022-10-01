@@ -79,14 +79,15 @@ function App(){
                       subCategory={query.subCategory}
                       runNewQuery={runNewQuery}/>
        
-  
         <div className="result-content"> 
           <ResultTable tableData={searchResults}/>
+          {(searchResults.details.totalHits > searchResults.end) && 
           <div className="action-container">
             <div role="action-button" className="action-button" onClick={getMoreResults}>More Results</div>
           </div>
+          }
         </div>       
-         
+        
 
       </div>
       }
