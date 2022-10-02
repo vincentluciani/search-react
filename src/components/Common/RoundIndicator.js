@@ -5,7 +5,7 @@ const RoundIndicator = (props) => {
     let className = "is-category-indicator" + ((props.numberToShow === 0)?" hidden":"")
     
     return(
-        <div class={className} >{props.numberToShow}</div>
+        <div className={className} >{props.numberToShow}</div>
     )
 
 }

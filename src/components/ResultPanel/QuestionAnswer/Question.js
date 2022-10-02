@@ -7,7 +7,7 @@ const Question= item =>{
     return DOMPurify.sanitize(text, { ALLOWED_TAGS: ["em"]})
   }
   let getQuestion = item => {
-    if (item.highlight && item.highlight.question){
+    if (!isNaN(item.highlight) && !isNaN(item.highlight.question)){
         return purifyText(item.highlight.question[0])
     } else {
         return item.question

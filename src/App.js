@@ -77,7 +77,10 @@ function App(){
       <Header start={searchResults.start} 
               end={searchResults.end} 
               totalHits={searchResults && searchResults.details && searchResults.details.totalHits} 
-              term={query.term}/>
+              term={query.term}
+              chooseDisplayBoxes={chooseDisplayBoxes}
+              chooseDisplayTable={chooseDisplayTable}
+              displayType={displayType}/>
       { searchResults && searchResults.details && (searchResults.details.totalHits > 0) &&   
       <div className="search-wrapper">
         <FacetSection facetData={searchResults && searchResults.details && searchResults.details.aggregations.category.buckets} 

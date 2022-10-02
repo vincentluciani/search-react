@@ -23,7 +23,7 @@ const ResultBoxes = props =>{
   <div className="search-results">
     {
     props.tableData && props.tableData.items && props.tableData.items.map(item=>
-      <ResultBox item={item} id={Math.random().toString() } />
+      <ResultBox item={item} id={Math.random().toString()} />
     )}
     
   </div>

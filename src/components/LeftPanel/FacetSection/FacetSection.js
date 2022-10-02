@@ -25,7 +25,7 @@ const FacetSection= props =>{
   <div className="filters">
       <div className="category-label" onClick={toggleHiddenNotHidden}><div>Category</div><Chevron orientation={hidden ? 'down' : 'up'} /><RoundIndicator numberToShow={numberOfFilters}/></div>
      <div className={'facet-section' + (hidden ? ' hidden' : '')}>
-        {props.facetData && props.facetData.map(item => <div className="category">{item.key}<FacetGroup facetList={item.subCategory.buckets} category={item.key} term={props.term} runNewQuery={props.runNewQuery}/></div>)}
+        {props.facetData && props.facetData.map(item => <div className="category">{item.key}<FacetGroup id={Math.random().toString()} facetList={item.subCategory.buckets} category={item.key} term={props.term} runNewQuery={props.runNewQuery}/></div>)}
         <br />{!isNaN(numberOfFilters) && (numberOfFilters > 0 ) && <div onClick={clickHandler} className="all-categories-link">&lt; All Categories</div>}
       </div>
   </div>

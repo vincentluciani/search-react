@@ -1,6 +1,7 @@
 
 .category-label-box{
     font-weight: normal;
+    font-size: 10px;
 }
 
 .box{
@@ -19,4 +20,5 @@
     text-decoration: underline;
     margin-top:5px;
     cursor: pointer;
+    font-size: 12px;
 }
