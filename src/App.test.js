@@ -31,14 +31,19 @@ test('first page', async () => {
     ReactDOM.createRoot(container).render(<App />);
   });
 
-  await waitFor(() => expect(screen.getByText(/Showing results 1-20 from 324 results for/i)).toBeInTheDocument());
+  await waitFor(() => expect(screen.getByText(/Showing results 1-20 from 47 results for/i)).toBeInTheDocument());
+
+  expect(screen.getAllByRole("question")).toHaveLength(20);
+  expect(screen.getAllByRole("answer")).toHaveLength(20);
+
+  // expect(screen.getByText(/Initialize an <em>/i)).toBeInTheDocument();
+  // expect(screen.getByText(/<div role="answer">$myarray=<em>array<\/em> ( <em>array<\/em> (a11,a12), <em>array<\/em> (a21,a22) );<\/div>/i).toBeInTheDocument());
+  // expect(screen.getByText(/myArray.contains(myObject)/i).toBeInTheDocument());
 
   jest.spyOn(window, 'fetch').mockResolvedValue({
     json: jest.fn().mockResolvedValue(mockFetch("secondPage"))
   })
 
-  expect(screen.getAllByRole("question")).toHaveLength(6);
-  expect(screen.getAllByRole("answer")).toHaveLength(6);
   const moreButton = screen.getByRole("action-button");
   expect(moreButton).toBeInTheDocument();
   expect(moreButton).toBeEnabled();
@@ -48,9 +53,22 @@ test('first page', async () => {
     moreButton.dispatchEvent(new MouseEvent('click', {bubbles: true}));
   });
 
-  await waitFor(() => expect(screen.getByText(/Showing results 1-40 from 324 results for/i)).toBeInTheDocument());
-  expect(screen.getAllByRole("question")).toHaveLength(13);
-  expect(screen.getAllByRole("answer")).toHaveLength(13);
+  await waitFor(() => expect(screen.getByText(/Showing results 1-40 from 47 results for/i)).toBeInTheDocument());
+  expect(screen.getAllByRole("question")).toHaveLength(40);
+  expect(screen.getAllByRole("answer")).toHaveLength(40);
+
+  jest.spyOn(window, 'fetch').mockResolvedValue({
+    json: jest.fn().mockResolvedValue(mockFetch("thirdPage"))
+  })
+
+  act(() => {
+    moreButton.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  });
+
+  await waitFor(() => expect(screen.getByText(/Showing results 1-47 from 47 results for/i)).toBeInTheDocument());
+  expect(screen.getAllByRole("question")).toHaveLength(47);
+  expect(screen.getAllByRole("answer")).toHaveLength(47);
+
 });
 
 
