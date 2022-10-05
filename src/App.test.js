@@ -5,7 +5,8 @@ import mockFetch   from './mocks/mockFetch.js';
 import App from './App';
 import { act } from "react-dom/test-utils";
 import ReactDOM from 'react-dom/client';
-import withMarkup from './utils/testHelpers.js'
+import customGetByText from './utils/testHelpers.js'
+
 
 let container;
 
@@ -27,9 +28,9 @@ test('first page', async () => {
   jest.spyOn(window, 'fetch').mockResolvedValue({
     json: jest.fn().mockResolvedValue(mockFetch("firstPage"))
   })
-
+  
   act(() => {
-    ReactDOM.createRoot(container).render(<App />);
+   ReactDOM.createRoot(container).render(<App />);
   });
 
   await waitFor(() => expect(screen.getByText(/Showing results 1-20 from 47 results for/i)).toBeInTheDocument());
@@ -37,18 +38,16 @@ test('first page', async () => {
   expect(screen.getAllByRole("question")).toHaveLength(20);
   expect(screen.getAllByRole("answer")).toHaveLength(20);
 
-  const getByTextWithMarkup = withMarkup(screen.getByText)
-  expect(getByTextWithMarkup(/Initialize an <em>/i)).toBeInTheDocument();
-
-  //expect(screen.getByText(/Initialize an <em>/i)).toBeInTheDocument();
-  // expect(screen.getByText(/<div role="answer">$myarray=<em>array<\/em> ( <em>array<\/em> (a11,a12), <em>array<\/em> (a21,a22) );<\/div>/i).toBeInTheDocument());
-  // expect(screen.getByText(/myArray.contains(myObject)/i).toBeInTheDocument());
+  expect(customGetByText("Initialize an <em>array</em> of <em>arrays</em>")).toBeInTheDocument()
+  expect(customGetByText("myArray.contains(myObject)")).toBeInTheDocument()
+  expect(customGetByText("array_pop($myarray);")).toBeInTheDocument()
+  
 
   jest.spyOn(window, 'fetch').mockResolvedValue({
     json: jest.fn().mockResolvedValue(mockFetch("secondPage"))
   })
 
-  const moreButton = screen.getByRole("action-button");
+  let moreButton = screen.getByRole("action-button");
   expect(moreButton).toBeInTheDocument();
   expect(moreButton).toBeEnabled();
   expect(moreButton).toHaveClass("action-button")
@@ -61,6 +60,23 @@ test('first page', async () => {
   expect(screen.getAllByRole("question")).toHaveLength(40);
   expect(screen.getAllByRole("answer")).toHaveLength(40);
 
+  moreButton = screen.getByRole("action-button");
+  expect(moreButton).toBeInTheDocument();
+  expect(moreButton).toBeEnabled();
+
+  let additionalElements = [
+    "<em>Array</em> with keys and values: sort per values",
+    "asort($myarray);",
+    "Create an <em>array</em> of objects with the ability to keep the objects in sequence and not accepting duplicates",
+    "Interface is Set Can use HashSet for very big <em>arrays</em> - uses a hash table HashSet myArray=new HashSet("
+  ]
+  
+  expect(customGetByText("Initialize an <em>array</em> of <em>arrays</em>")).toBeInTheDocument()
+  expect(customGetByText("myArray.contains(myObject)")).toBeInTheDocument()
+  expect(customGetByText("<em>Array</em> with keys and values: sort per values")).toBeInTheDocument()
+  expect(customGetByText("asort($myarray);")).toBeInTheDocument()
+  expect(customGetByText("Take characters from position i to j of a string and put in an <em>array</em> of character, putting the first")).toBeInTheDocument()
+  
   jest.spyOn(window, 'fetch').mockResolvedValue({
     json: jest.fn().mockResolvedValue(mockFetch("thirdPage"))
   })
@@ -72,6 +88,28 @@ test('first page', async () => {
   await waitFor(() => expect(screen.getByText(/Showing results 1-47 from 47 results for/i)).toBeInTheDocument());
   expect(screen.getAllByRole("question")).toHaveLength(47);
   expect(screen.getAllByRole("answer")).toHaveLength(47);
+
+  expect(screen.queryByRole("action-button")).not.toBeInTheDocument
+
+
+  additionalElements = [
+    "",
+    "",
+    "",
+    ""
+  ]
+  
+  expect(customGetByText("Initialize an <em>array</em> of <em>arrays</em>")).toBeInTheDocument()
+  expect(customGetByText("myArray.contains(myObject)")).toBeInTheDocument()
+  expect(customGetByText("<em>Array</em> with keys and values: sort per values")).toBeInTheDocument()
+  expect(customGetByText("asort($myarray);")).toBeInTheDocument()
+  expect(customGetByText("Create an <em>array</em> of objects with the ability to keep the objects in sequence and not accepting duplicates")).toBeInTheDocument()
+  expect(customGetByText("Interface is Set Can use HashSet for very big <em>arrays</em> - uses a hash table HashSet myArray=new HashSet(")).toBeInTheDocument()
+  expect(customGetByText("Create an <em>array</em> of object with the possibility to use bidirectional fifo functionality ( fifo + lifo")).toBeInTheDocument()
+  expect(customGetByText("Interface is Deque Can use class ArrayDeque")).toBeInTheDocument()
+  expect(customGetByText("Create an <em>array</em> of objects with the ability to keep the objects in sequence, not accepting duplicates")).toBeInTheDocument()
+  expect(customGetByText("Interface is SortedSet Can use TreeSet that gives instant access to lists of ordered data TreeSet myArray=new TreeSet();")).toBeInTheDocument()
+
 
 });
 
@@ -88,5 +126,28 @@ test('zero result', async () => {
   
   await waitFor(() => expect(screen.getByText(/It is not you, it is me/i)).toBeInTheDocument());
   
+
+})
+
+test('override gettext', async () => {
+ 
+  const Hello = () => (
+    <div>
+      Hello <span>world</span>
+    </div>
+  );
+  render(<Hello />);
+
+  screen.getByText((content, node) => {
+    const hasText = (node) => node.textContent === "Hello world";
+
+    const nodeHasText = hasText(node);
+    const childrenDontHaveText = Array.from(node.children).every(
+      (child) => !hasText(child)
+    );
+
+    return nodeHasText && childrenDontHaveText;
+  });
+
 
 })

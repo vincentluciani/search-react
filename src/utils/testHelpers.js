@@ -1,12 +1,21 @@
-import { MatcherFunction } from '@testing-library/react'
+import { render, screen, waitFor  } from '@testing-library/react';
 
-const withMarkup = (query) => (text) =>
-  query((node) => {
-    const hasText = (node) => node.textContent === text
-    const childrenDontHaveText = Array.from(node.children).every(
-      child => !hasText(child)
-    )
-    return hasText(node) && childrenDontHaveText
-  })
+const verifyText = (content, node, htmlToFind) => {
+  const hasHTML = (node) => {
+    const test = node.textContent
+    return node.innerHTML === htmlToFind;
+  }
+  const nodeHasText = hasHTML(node);
+  const childrenDontHaveText = Array.from(node.children).every(
+    (child) => !hasHTML(child)
+  );
+  return nodeHasText && childrenDontHaveText;
+}
 
-export default withMarkup
+
+const customGetByText = htmlFragment => {
+  currentCustomGetByText = (content, node) => verifyText(content, node,htmlFragment)
+   return screen.getByText(currentCustomGetByText)
+}
+
+export default customGetByText
