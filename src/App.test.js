@@ -91,13 +91,6 @@ test('first page', async () => {
 
   expect(screen.queryByRole("action-button")).not.toBeInTheDocument
 
-
-  additionalElements = [
-    "",
-    "",
-    "",
-    ""
-  ]
   
   expect(customGetByText("Initialize an <em>array</em> of <em>arrays</em>")).toBeInTheDocument()
   expect(customGetByText("myArray.contains(myObject)")).toBeInTheDocument()
@@ -110,8 +103,58 @@ test('first page', async () => {
   expect(customGetByText("Create an <em>array</em> of objects with the ability to keep the objects in sequence, not accepting duplicates")).toBeInTheDocument()
   expect(customGetByText("Interface is SortedSet Can use TreeSet that gives instant access to lists of ordered data TreeSet myArray=new TreeSet();")).toBeInTheDocument()
 
+  expect(screen.queryByText('< All Categories')).not.toBeInTheDocument
+
 
 });
+
+test('filter', async () => {
+ 
+  jest.spyOn(window, 'fetch').mockResolvedValue({
+    json: jest.fn().mockResolvedValue(mockFetch("firstPage"))
+  })
+
+  act(() => {
+    ReactDOM.createRoot(container).render(<App />);
+  });
+  
+  await waitFor(() => expect(screen.getByText(/Showing results 1-20 from 47 results for/i)).toBeInTheDocument());
+
+  jest.spyOn(window, 'fetch').mockResolvedValue({
+    json: jest.fn().mockResolvedValue(mockFetch("filter"))
+  })
+
+  expect(screen.getByText("Deal with strings (4)")).toBeInTheDocument
+  expect(screen.getByText("Logic (1)")).toBeInTheDocument
+
+  const linkToClick = screen.getByText("Deal with strings (4)")
+
+  act(() => {
+    linkToClick.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  });
+
+  await waitFor(() => expect(screen.getByText(/Showing results 1-20 from 44 results/i)).toBeInTheDocument());
+
+  expect(screen.queryByText("Logic (1)")).not.toBeInTheDocument
+  expect(screen.getByText("Deal with strings (44)")).toBeInTheDocument
+
+  const allCategoriesLink = screen.queryByText('< All Categories')
+  expect(allCategoriesLink).toBeInTheDocument
+
+  jest.spyOn(window, 'fetch').mockResolvedValue({
+    json: jest.fn().mockResolvedValue(mockFetch("firstPage"))
+  })
+
+  act(() => {
+    allCategoriesLink.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  });
+
+  await waitFor(() => expect(screen.getByText(/Showing results 1-20 from 47 results/i)).toBeInTheDocument());
+
+  expect(screen.getByText("Deal with strings (4)")).toBeInTheDocument
+  expect(screen.getByText("Logic (1)")).toBeInTheDocument
+  expect(screen.queryByText('< All Categories')).not.toBeInTheDocument
+})
 
 
 test('zero result', async () => {
