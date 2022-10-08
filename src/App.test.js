@@ -1,11 +1,9 @@
 import { render, screen, waitFor  } from '@testing-library/react';
-import { MatcherFunction } from '@testing-library/react'
-import fetchResult from "./services/fetchResult.js";
 import mockFetch   from './mocks/mockFetch.js';
 import App from './App';
 import { act } from "react-dom/test-utils";
 import ReactDOM from 'react-dom/client';
-import customGetByText from './utils/testHelpers.js'
+import customGetByText,{checkHTMLAtPositionByRole} from './utils/testHelpers.js'
 
 
 let container;
@@ -15,14 +13,12 @@ beforeEach(() => {
   document.body.appendChild(container);
 });
 
-
 afterEach(() => {
   jest.restoreAllMocks();
   document.body.removeChild(container);
   container = null;
 });
 
-/* TODO: search with array, first, second and third page */
 test('first page', async () => {
  
   jest.spyOn(window, 'fetch').mockResolvedValue({
@@ -42,7 +38,6 @@ test('first page', async () => {
   expect(customGetByText("myArray.contains(myObject)")).toBeInTheDocument()
   expect(customGetByText("array_pop($myarray);")).toBeInTheDocument()
   
-
   jest.spyOn(window, 'fetch').mockResolvedValue({
     json: jest.fn().mockResolvedValue(mockFetch("secondPage"))
   })
@@ -105,11 +100,11 @@ test('first page', async () => {
 
   expect(screen.queryByText('< All Categories')).not.toBeInTheDocument
 
-
 });
 
 test('filter', async () => {
  
+    /* Filter OFF */
   jest.spyOn(window, 'fetch').mockResolvedValue({
     json: jest.fn().mockResolvedValue(mockFetch("firstPage"))
   })
@@ -120,15 +115,17 @@ test('filter', async () => {
   
   await waitFor(() => expect(screen.getByText(/Showing results 1-20 from 47 results for/i)).toBeInTheDocument());
 
+  expect(screen.getByText("Deal with strings (4)")).toBeInTheDocument
+  expect(screen.getByText("Logic (1)")).toBeInTheDocument
+  expect(screen.getAllByRole("question")).toHaveLength(20);
+  expect(screen.getAllByRole("answer")).toHaveLength(20);
+  expect(checkHTMLAtPositionByRole(0,"Initialize an <em>array</em> of <em>arrays</em>","question" )).toBe(true)
+
+  /* Filter ON */
   jest.spyOn(window, 'fetch').mockResolvedValue({
     json: jest.fn().mockResolvedValue(mockFetch("filter"))
   })
-
-  expect(screen.getByText("Deal with strings (4)")).toBeInTheDocument
-  expect(screen.getByText("Logic (1)")).toBeInTheDocument
-
   const linkToClick = screen.getByText("Deal with strings (4)")
-
   act(() => {
     linkToClick.dispatchEvent(new MouseEvent('click', {bubbles: true}));
   });
@@ -137,10 +134,15 @@ test('filter', async () => {
 
   expect(screen.queryByText("Logic (1)")).not.toBeInTheDocument
   expect(screen.getByText("Deal with strings (44)")).toBeInTheDocument
+  expect(screen.getAllByRole("question")).toHaveLength(20);
+  expect(screen.getAllByRole("answer")).toHaveLength(20);
 
+  expect(checkHTMLAtPositionByRole(0,"Separate string in <em>array</em> elements using regular expression example: separator is @ or .","question" )).toBe(true)
+  
   const allCategoriesLink = screen.queryByText('< All Categories')
   expect(allCategoriesLink).toBeInTheDocument
 
+  /* Filter OFF */
   jest.spyOn(window, 'fetch').mockResolvedValue({
     json: jest.fn().mockResolvedValue(mockFetch("firstPage"))
   })
@@ -154,6 +156,9 @@ test('filter', async () => {
   expect(screen.getByText("Deal with strings (4)")).toBeInTheDocument
   expect(screen.getByText("Logic (1)")).toBeInTheDocument
   expect(screen.queryByText('< All Categories')).not.toBeInTheDocument
+
+  expect(checkHTMLAtPositionByRole(0,"Separate string in <em>array</em> elements using regular expression example: separator is @ or .","question" )).toBe(true)
+
 })
 
 
@@ -169,28 +174,53 @@ test('zero result', async () => {
   
   await waitFor(() => expect(screen.getByText(/It is not you, it is me/i)).toBeInTheDocument());
   
-
 })
 
-test('override gettext', async () => {
+test('box display', async () => {
  
-  const Hello = () => (
-    <div>
-      Hello <span>world</span>
-    </div>
-  );
-  render(<Hello />);
+  jest.spyOn(window, 'fetch').mockResolvedValue({
+    json: jest.fn().mockResolvedValue(mockFetch("firstPage"))
+  })
 
-  screen.getByText((content, node) => {
-    const hasText = (node) => node.textContent === "Hello world";
+  act(() => {
+    ReactDOM.createRoot(container).render(<App />);
+  });
+  
+  await waitFor(() => expect(screen.getByText(/Showing results 1-20 from 47 results for/i)).toBeInTheDocument());
 
-    const nodeHasText = hasText(node);
-    const childrenDontHaveText = Array.from(node.children).every(
-      (child) => !hasText(child)
-    );
+  const displayBoxesChoiceDiv = screen.getByTitle("Display questions and answers in boxes")
+  expect(displayBoxesChoiceDiv).toBeInTheDocument
+  expect(displayBoxesChoiceDiv).not.toHaveClass("surrounded")
+  const displayTableChoiceDiv = screen.getByTitle("Display questions and answers in a table")
+  expect(displayTableChoiceDiv).toBeInTheDocument
+  expect(displayTableChoiceDiv).toHaveClass("surrounded")
 
-    return nodeHasText && childrenDontHaveText;
+
+  act(() => {
+    displayBoxesChoiceDiv.dispatchEvent(new MouseEvent('click', {bubbles: true}));
   });
 
+  await waitFor(() => expect(screen.getAllByText("See Answer")).toHaveLength(20));
+  expect(customGetByText("Initialize an <em>array</em> of <em>arrays</em>")).toBeInTheDocument()
+  const seeAnswerLinks = screen.getAllByText("See Answer")
+  const seeAnswerLink = seeAnswerLinks[0]
 
+  act(() => {
+    seeAnswerLink.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  });
+
+  await waitFor(() => expect(screen.getByText(/\$myarray=/i)).toBeInTheDocument);
+
+  screen.getByText(/See Question/i)
+  expect(customGetByText("Initialize an <em>array</em> of <em>arrays</em>")).toBe(null)
+  const seeQuestionLink = screen.getByText(/See Question/i)
+
+  act(() => {
+    seeQuestionLink.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  });
+
+  await waitFor(() => expect(customGetByText("Initialize an <em>array</em> of <em>arrays</em>")).toBeInTheDocument);
+ 
+  expect(customGetByText("Initialize an <em>array</em> of <em>arrays</em>")).not.toBe(null)
+  
 })
