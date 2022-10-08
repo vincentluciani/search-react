@@ -1,16 +1,16 @@
 import './Search.css';
-import ResultTable from './components/ResultPanel/ResultTable/ResultTable.js';
-import ResultBoxes from './components/ResultPanel/ResultBoxes/ResultBoxes.js';
-import FacetSection from './components/LeftPanel/FacetSection/FacetSection.js';
+import ResultTable from './ResultPanel/ResultTable/ResultTable.js';
+import ResultBoxes from './ResultPanel/ResultBoxes/ResultBoxes.js';
+import FacetSection from './LeftPanel/FacetSection/FacetSection.js';
 import React, { useState,useEffect } from 'react';   
-import fetchResult from './services/fetchResult';
-import Header from './components/Header/Header.js'
-import JumpingDog from './components/Common/JumpingDog';
+import fetchResult from '../services/fetchResult';
+import Header from './Header/Header.js'
+import JumpingDog from './Common/JumpingDog';
 
 
-function Search(){
-  const params = new URLSearchParams(window.location.search);
-
+const Search = (props) => {
+  
+  const urlParams = props.urlParams
   const [searchResults, setSearchResults] = useState({});
   const [query, setQuery] = useState({});
   const [displayType, setDisplayType] = useState('table');
@@ -45,9 +45,9 @@ function Search(){
   useEffect(() => {
     const query = {
       page: 1,
-      term: params.get('term'),
-      category: params.get('category'),
-      subCategory: params.get('subCategory')
+      term: urlParams.term,
+      category: urlParams.category,
+      subCategory: urlParams.subCategory
     }
     setQuery(query)
     fetchResultsHandler(query)
@@ -73,7 +73,7 @@ function Search(){
   }
 
   return (
-    <div className="search"> 
+    <div className="search" style={{"--action-color":props.actionColor}}> 
       <Header start={searchResults.start} 
               end={searchResults.end} 
               totalHits={searchResults && searchResults.details && searchResults.details.totalHits} 

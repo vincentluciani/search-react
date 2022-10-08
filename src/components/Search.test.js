@@ -1,9 +1,9 @@
 import { render, screen, waitFor  } from '@testing-library/react';
-import mockFetch   from './mocks/mockFetch.js';
-import App from './App';
+import mockFetch   from '../mocks/mockFetch.js';
+import Search from './Search';
 import { act } from "react-dom/test-utils";
 import ReactDOM from 'react-dom/client';
-import customGetByText,{checkHTMLAtPositionByRole} from './utils/testHelpers.js'
+import customGetByText,{checkHTMLAtPositionByRole} from '../utils/testHelpers.js'
 
 
 let container;
@@ -25,8 +25,14 @@ test('first page', async () => {
     json: jest.fn().mockResolvedValue(mockFetch("firstPage"))
   })
   
+  const urlParams = {
+    term: "array",
+    category: "",
+    subCategory: ""
+  }
+  
   act(() => {
-   ReactDOM.createRoot(container).render(<App />);
+   ReactDOM.createRoot(container).render(<Search urlParams={urlParams} actionColor="#2c47a9" />);
   });
 
   await waitFor(() => expect(screen.getByText(/Showing results 1-20 from 47 results for/i)).toBeInTheDocument());
@@ -109,8 +115,14 @@ test('filter', async () => {
     json: jest.fn().mockResolvedValue(mockFetch("firstPage"))
   })
 
+  const urlParams = {
+    term: "array",
+    category: "",
+    subCategory: ""
+  }
+
   act(() => {
-    ReactDOM.createRoot(container).render(<App />);
+    ReactDOM.createRoot(container).render(<Search urlParams={urlParams} actionColor="#2c47a9" />);
   });
   
   await waitFor(() => expect(screen.getByText(/Showing results 1-20 from 47 results for/i)).toBeInTheDocument());
@@ -168,8 +180,14 @@ test('zero result', async () => {
     json: jest.fn().mockResolvedValue(mockFetch("nothing"))
   })
 
+  const urlParams = {
+    term: "array",
+    category: "",
+    subCategory: ""
+  }
+
   act(() => {
-    ReactDOM.createRoot(container).render(<App />);
+    ReactDOM.createRoot(container).render(<Search urlParams={urlParams} actionColor="#2c47a9"/>);
   });
   
   await waitFor(() => expect(screen.getByText(/It is not you, it is me/i)).toBeInTheDocument());
@@ -182,8 +200,14 @@ test('box display', async () => {
     json: jest.fn().mockResolvedValue(mockFetch("firstPage"))
   })
 
+  const urlParams = {
+    term: "array",
+    category: "",
+    subCategory: ""
+  }
+
   act(() => {
-    ReactDOM.createRoot(container).render(<App />);
+    ReactDOM.createRoot(container).render(<Search urlParams={urlParams} actionColor="#2c47a9"/>);
   });
   
   await waitFor(() => expect(screen.getByText(/Showing results 1-20 from 47 results for/i)).toBeInTheDocument());

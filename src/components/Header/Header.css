@@ -21,7 +21,7 @@
 
 .surrounded{
     color: white;
-    background-color: #2c47a9;
+    background-color: var(--action-color);
     border-radius: 10px;
     cursor: none;
 }
