@@ -41,9 +41,6 @@ test('show group', async () => {
     }
   ]
 
-
-  
-
   act(() => {
    ReactDOM.createRoot(container).render(<FacetGroup facetList={facetList} category="JAVA" term="array" runNewQuery={testFunction}  />);
   });
