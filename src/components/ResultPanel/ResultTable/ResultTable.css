@@ -1,33 +1,34 @@
 
-table,tbody,tr,th,td{
+.search-results table,.search-results tbody,.search-results tr,.search-results th,.search-results td{
     border: none;
 }
 
-table tr td{
+.search-results table tr td{
     border-top: 1px solid lightgrey;
     border-left: 1px solid lightgrey;
 }
 
-table tr td:first-child{
+.search-results table tr td:first-child{
     border-left: 1px solid black;
 }
 
-table tr:first-child td:first-child{
+.search-results table tr:first-child td:first-child{
     border-radius: 10px 0px 0px 0px;
 }
 
-table tr:last-child td:first-child{
+.search-results table tr:last-child td:first-child{
     border-radius: 0px 0px 0px 10px;
 }
 
-table tr:last-child td:last-child{
+.search-results table tr:last-child td:last-child{
     border-radius: 0px 0px 10px 0px;
 }
 
-table tr:first-child td:last-child{
+.search-results table tr:first-child td:last-child{
     border-radius: 0px 10px 0px 0px;
 }
-table tr td:last-child{
+
+.search-results table tr td:last-child{
     border-right: 1px solid black;
 }
 
@@ -35,7 +36,7 @@ table tr:first-child td{
     border-top: 1px solid black;
 }
 
-table tr:last-child td{
+.search-results table tr:last-child td{
     border-bottom: 1px solid black;
 }
 
@@ -43,29 +44,29 @@ table tr:last-child td{
     font-size: 25px;
 }
 
-td:nth-child(2) {
+.search-results td:nth-child(2) {
     background-color: #f7f7f7c7;
 }
-td:first-child{
+.search-results td:first-child{
     width: 5px;
     font-size:13px;
     text-align: center;
     writing-mode: vertical-lr;
 }
 
-th, td {
+.search-results th, .search-results td {
     padding: 15px;
     text-align: left;
     overflow-wrap: break-word;
     word-wrap: break-word;
 }
-table {
+.search-results table {
     table-layout: fixed;
     width: 100%;
     background: white;
 }
 
 
-em {
+.search-results em {
     font-weight: bold;
 }
