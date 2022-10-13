@@ -12,7 +12,7 @@ function App(){
   }
    return (
     <div className="App"> 
-      <Search urlParams={urlParams} actionColor="#6459c9"/>
+      <Search urlParams={urlParams} actionColor="black"/>
     </div> 
   );
 }
