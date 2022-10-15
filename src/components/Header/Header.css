@@ -12,6 +12,7 @@
 .result-header > div {
     margin-right: 5px; 
     cursor:pointer;
+    padding-top:2px;
 }
 
 .display-choice{
