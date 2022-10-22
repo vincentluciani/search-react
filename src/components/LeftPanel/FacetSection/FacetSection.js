@@ -16,7 +16,7 @@ const FacetSection= props =>{
     }
   }
   const clickHandler = () => {
-    props.runNewQuery({term:props.term,page:1});
+    props.runNewQuery({term:props.term,page:1,category:props.hardCodedCategory});
   }
 
   let numberOfFilters = (props.subCategory) ? 1 : 0

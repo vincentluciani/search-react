@@ -87,7 +87,8 @@ const Search = (props) => {
                       term={query.term} 
                       category={query.category} 
                       subCategory={query.subCategory}
-                      runNewQuery={runNewQuery}/>
+                      runNewQuery={runNewQuery}
+                      hardCodedCategory={urlParams.category}/>
        
         <div className="result-content"> 
           {(displayType == 'table') && <ResultTable tableData={searchResults}/>}

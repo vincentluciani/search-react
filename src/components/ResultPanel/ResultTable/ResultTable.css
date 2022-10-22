@@ -3,6 +3,10 @@
     border: none;
 }
 
+.search-results td:first-child{
+    background-color: white;
+}
+
 .search-results table tr td{
     border-top: 1px solid lightgrey;
     border-left: 1px solid lightgrey;
