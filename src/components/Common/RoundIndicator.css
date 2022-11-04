@@ -2,8 +2,8 @@
     .is-category-indicator{
         display: inline-block;
         margin-left: 16px;
-        background: #b657af;
-        padding: 10px 16px 10px 16px;
+        background: var(--action-color);
+        padding: 6px 13px 6px 12px;
         border-radius: 30px;
         text-align: center;
         color: white;

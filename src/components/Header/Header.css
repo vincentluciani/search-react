@@ -32,6 +32,9 @@
 
 .result-header-wrapper {
     margin-bottom: 20px;
+    max-width: 1620px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
 @media screen and (max-width: 999px){

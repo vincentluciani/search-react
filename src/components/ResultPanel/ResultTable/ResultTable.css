@@ -51,11 +51,24 @@ table tr:first-child td{
 .search-results td:nth-child(2) {
     background-color: #f7f7f7c7;
 }
+
 .search-results td:first-child{
-    width: 5px;
-    font-size:13px;
     text-align: center;
     writing-mode: vertical-lr;
+}
+
+@media screen and (min-width: 1000px){
+    .search-results td:first-child{
+        width: 5px;
+        font-size:13px;
+    }
+}
+@media screen and (max-width: 999px){
+    .search-results td:first-child{
+        width: 0px;
+        font-size:10px;
+        padding: 10px;
+    }
 }
 
 .search-results th, .search-results td {

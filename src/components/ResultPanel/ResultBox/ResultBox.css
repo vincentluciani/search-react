@@ -6,13 +6,26 @@
 
 .box{
     box-shadow: -1px 4px 10px 0px rgb(0 0 0 / 20%);
-    width: 250px;
-    font-size: 15px;
-    margin:5px;
     border-radius:10px;
     padding: 10px;
     margin-bottom: 5px;
     word-wrap: break-word;
+}
+
+@media screen and (min-width: 1000px){
+    .box{
+        width: 250px;
+        font-size: 15px;
+        margin:5px;
+    }
+}
+
+@media screen and (max-width: 1000px){
+    .box{
+        width: calc(100% - 40px);
+        font-size: 20px;
+        margin: 20px 20px 0px 20px;
+    }
 }
 
 .span-toggle{
