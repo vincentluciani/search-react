@@ -10,7 +10,7 @@
 }
 .chevron.up{
     transform: rotate(180deg);
-    margin-top: 0px;
+    margin-top: -2px;
 
     /* transform: rotate(180deg);
     transform-origin: center;

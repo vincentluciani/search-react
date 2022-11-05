@@ -14,6 +14,7 @@
 
 .search-results table tr td:first-child{
     border-left: 1px solid black;
+    vertical-align: middle;
 }
 
 .search-results table tr:first-child td:first-child{

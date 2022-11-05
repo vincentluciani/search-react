@@ -29,8 +29,8 @@
     }
     .category-label {
         cursor: pointer;
-        /* color: #1803b1;
-        border-top-color: #1803b1; */
+        color: black;
+        border-top-color: black; 
         display: flex;
         align-items: center;
         height: 18px;
